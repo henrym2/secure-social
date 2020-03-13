@@ -1,15 +1,19 @@
 <template>
   <div id="app">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <NewPost></NewPost>
   </div>
 </template>
 
 <script>
-
+// import Nav from './components/Nav'
+// import Login from './components/Login'
+import NewPost from './components/NewPost'
 export default {
   name: 'App',
   components: {
-   
+  //  Nav,
+  //  Login
+  NewPost
   }
 }
 </script>
@@ -19,8 +23,8 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
