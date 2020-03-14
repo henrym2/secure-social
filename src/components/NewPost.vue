@@ -1,6 +1,6 @@
 <template>
 <b-card
-    class="new-post-card mb-3">
+    class="new-post-card mb-3 ml-2 mr-2">
     <template v-slot:header>
         <div class="d-flex flex-row">
             <h6 class="mb-0 d-flex mr-auto align-self-center">New Post</h6>
@@ -33,6 +33,8 @@ export default {
 
 <style>
 .new-post-card {
-    width: 25vw;
+    width: 23rem;
+    max-width: 25rem;
+    max-height: 27.3rem;
 }
 </style>

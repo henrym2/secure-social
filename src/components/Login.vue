@@ -34,8 +34,8 @@ export default {
     display: flex;
     justify-content: center;
     align-items:center;
-    width: 25.2vw;
-    height: 58.3vh;
+    width: 25.2rem;
+    height: 27.3rem;
     align-self: center;
   }
 </style>

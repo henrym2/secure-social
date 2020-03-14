@@ -1,6 +1,6 @@
 <template>
 <b-card
-    class="post mb-3"
+    class="post mb-3 ml-2 mr-2"
     :title=title>
     <b-card-body class="post-body">
         {{body}}
@@ -17,7 +17,8 @@ export default {
     },
     data () {
         return {
-          
+            cypherTitle: "",
+            cypherBody: ""
         }
     },
 }
@@ -28,6 +29,8 @@ export default {
     white-space: pre-line;
 }
 .post{
-    width: 25vw
+    width: 23rem;
+    max-width: 25rem;
+    max-height: 27.3rem;
 }
 </style>
