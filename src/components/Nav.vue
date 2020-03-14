@@ -1,6 +1,6 @@
 <template>
         <b-navbar toggleable="lg" type="dark" variant="dark" class="d-flex">
-            <b-navbar-brand><router-link class="nav-link" to="/home">Secure-Social</router-link></b-navbar-brand>
+            <b-navbar-brand><router-link class="nav-link" to="/login">Secure-Social</router-link></b-navbar-brand>
             <b-navbar-nav>
                 <b-navbar-nav class="mr-auto">
                     <b-nav-item><router-link class="nav-link" to="/feed">Home</router-link></b-nav-item>

@@ -1,24 +1,25 @@
 <template>
   <div class="login-container">
       <div class="card login-card shadow d-flex">
-        <h3>Login</h3>
+        <h3>Register</h3>
         <b-img rounded="circle" src="https://picsum.photos/seed/picsum/125/125?blur"></b-img>
         <br>
-        <b-form @submit="login">
+        <b-form @submit="register">
           <b-form-group label="Email:">
             <b-form-input label="Email:" placeholder="Enter Email" required v-model="input.email"></b-form-input>
           </b-form-group>
           <b-form-group label="Password:">
             <b-form-input label="Password:" placeholder="Enter password" required type="password" v-model="input.password"></b-form-input>
           </b-form-group>
-          <b-button class="d-flex align-self-center m-auto" variant="primary" @click="login()">Login</b-button>
+          <b-button class="d-flex align-self-center m-auto" variant="primary" @click="register()">Register</b-button>
         </b-form>
-        <router-link  class="mt-2" to="/register" >Register</router-link>
+        <router-link class="mt-2" to="/login">Login</router-link>
       </div>
   </div>
 </template>
 
 <script>
+// const BOX_ID = process.env.VUE_APP_BOX_ID
 export default {
   name: "Login",
   data () {
@@ -30,21 +31,18 @@ export default {
     }
   },
   methods: {
-    login () {
-      const {email, password} = this.input
-      if(email != "" && password != "") {
-        if(email.toLowerCase() == "admin" && password == "admin"){
-          console.log("Logged in", email, password)
+    register () {
+        const {email, password} = this.input
+        const { privateKey, publicKey } = this.generateKey()
+        console.log({email, password, publicKey, privateKey})
+        // await this.$jsonbox.create({email, password, publicKey, privateKey})
+    },
+    generateKey() {
+        
+    } 
+  },
+  
 
-          this.$emit("authenticated", true)
-          
-          this.$router.push({ name: "Feed", params: { user: "UserID" } })
-        } else {
-          console.log("Failed", email, password)
-        }
-      }
-    }
-  }
 }
 </script>
 

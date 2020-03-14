@@ -11,6 +11,9 @@
     "bootstrap": "^4.4.1",
     "bootstrap-vue": "^2.6.1",
     "core-js": "^3.6.4",
+    "crypto": "^1.0.1",
+    "dotenv": "^8.2.0",
+    "jsonbox-node": "^1.0.7",
     "vue": "^2.6.11",
     "vue-router": "^3.1.5"
   },
