@@ -1,13 +1,13 @@
 <template>
         <b-navbar toggleable="lg" type="dark" variant="dark" class="d-flex">
-            <b-navbar-brand href="#">Secure-Social</b-navbar-brand>
+            <b-navbar-brand><router-link class="nav-link" to="/home">Secure-Social</router-link></b-navbar-brand>
             <b-navbar-nav>
                 <b-navbar-nav class="mr-auto">
-                    <b-nav-item>Home</b-nav-item>
-                    <b-nav-item>Profile</b-nav-item>
+                    <b-nav-item><router-link class="nav-link" to="/feed">Home</router-link></b-nav-item>
+                    <b-nav-item><router-link class="nav-link" to="/profile">Profile</router-link></b-nav-item>
                 </b-navbar-nav>
                 <b-navbar-nav >
-                    <b-button>Logout</b-button>
+                    <b-button class="b-logout" @click="logout()">Logout</b-button>
                 </b-navbar-nav>
             </b-navbar-nav>
         </b-navbar>
@@ -15,10 +15,23 @@
 
 <script>
 export default {
-    name: "Nav"
+    name: "Nav",
+    methods: {
+        logout () {
+            this.$router.push("/logout")
+        }
+    }
 }
 </script>
 
 <style>
+.nav-link {
+    color: inherit;
+    justify-self: center;
+}
 
+.b-logout {
+    height: 2.4rem;
+    margin-top: 0.65rem;
+}
 </style>

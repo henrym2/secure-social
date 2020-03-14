@@ -1,26 +1,20 @@
 <template>
-  <div id="app" class="d-flex flex-column">
-    <Nav></Nav>
-    <div>
-      <Feed class="d-flex flex-column feed"></Feed>
-    </div>
+  <div id="app d-flex">
+    <Nav v-if="this.$route.path != '/logout' && this.$route.path != '/'"></Nav>
+    <router-view/>
   </div>
 </template>
 
 <script>
-import Nav from './components/Nav'
-// import Login from './components/Login'
-// import NewPost from './components/NewPost'
-// import Post from './components/Post'
-import Feed from './components/Feed'
+import Nav from "@/components/Nav.vue"
 
 export default {
-  name: 'App',
   components: {
-    Nav,
-  //  Login
-  // Post
-    Feed
+    Nav
+  },
+  mounted () {
+    let truth = this.$route.path == '/'
+    console.log(truth)
   }
 }
 </script>
@@ -30,11 +24,20 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  display: flex;
+  text-align: center;
+  color: #2c3e50;
 }
 
-.feed {
-  align-items: center;
-  justify-content: center;
+#nav {
+  padding: 30px;
+}
+
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#nav a.router-link-exact-active {
+  color: #42b983;
 }
 </style>
