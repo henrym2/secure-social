@@ -1,6 +1,6 @@
 <template>
   <div id="app d-flex">
-    <Nav v-if="this.$route.path != '/logout' && this.$route.path != '/'"></Nav>
+    <Nav v-if="!navLess()"></Nav>
     <router-view/>
   </div>
 </template>
@@ -9,12 +9,21 @@
 import Nav from "@/components/Nav.vue"
 
 export default {
+  data () {
+    return {
+      navLessRoutes: [
+        "/", "/logout", "/login", "/register"
+      ]
+    }
+  },
   components: {
     Nav
   },
-  mounted () {
-    let truth = this.$route.path == '/'
-    console.log(truth)
+  methods: {
+    navLess () {
+      console.log(this.$route.path)
+      return this.navLessRoutes.includes(this.$route.path)
+    }
   }
 }
 </script>
