@@ -1,6 +1,6 @@
 <template>
 <b-card
-    class="new-post-card">
+    class="new-post-card mb-3">
     <template v-slot:header>
         <div class="d-flex flex-row">
             <h6 class="mb-0 d-flex mr-auto align-self-center">New Post</h6>

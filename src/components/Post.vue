@@ -1,11 +1,9 @@
 <template>
 <b-card
-    class="new-post-card"
-    title={{title}}>
-    <b-card-body>
-        <p>
-            {{body}}
-        </p>
+    class="post mb-3"
+    :title=title>
+    <b-card-body class="post-body">
+        {{body}}
     </b-card-body>
 </b-card>
 </template>
@@ -16,10 +14,20 @@ export default {
     props: {
         title: String,
         body: String
-    }
+    },
+    data () {
+        return {
+          
+        }
+    },
 }
 </script>
 
 <style>
-
+.post-body{
+    white-space: pre-line;
+}
+.post{
+    width: 25vw
+}
 </style>

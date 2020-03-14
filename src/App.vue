@@ -1,19 +1,26 @@
 <template>
-  <div id="app">
-    <NewPost></NewPost>
+  <div id="app" class="d-flex flex-column">
+    <Nav></Nav>
+    <div>
+      <Feed class="d-flex flex-column feed"></Feed>
+    </div>
   </div>
 </template>
 
 <script>
-// import Nav from './components/Nav'
+import Nav from './components/Nav'
 // import Login from './components/Login'
-import NewPost from './components/NewPost'
+// import NewPost from './components/NewPost'
+// import Post from './components/Post'
+import Feed from './components/Feed'
+
 export default {
   name: 'App',
   components: {
-  //  Nav,
+    Nav,
   //  Login
-  NewPost
+  // Post
+    Feed
   }
 }
 </script>
@@ -24,7 +31,10 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   display: flex;
-  justify-content: center;
+}
+
+.feed {
   align-items: center;
+  justify-content: center;
 }
 </style>
