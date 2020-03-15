@@ -34,11 +34,15 @@ export default {
     register () {
         const {email, password} = this.input
         const { privateKey, publicKey } = this.generateKey()
-        console.log({email, password, publicKey, privateKey})
+        let data = {email, password, privateKey, publicKey}
+        this.$store.dispatch('register',data).then(() => {
+          this.$router.push('/feed')
+        }).catch(err => console.error(err))
+        
         // await this.$jsonbox.create({email, password, publicKey, privateKey})
     },
     generateKey() {
-        
+      return {privateKey: "a", publicKey: "b"}  
     } 
   },
   

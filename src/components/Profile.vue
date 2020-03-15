@@ -77,6 +77,9 @@ export default {
   computed: {
     trustRows () {
       return this.trusted.length
+    },
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn
     }
   },
   methods: {

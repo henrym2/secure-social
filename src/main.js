@@ -4,19 +4,21 @@ import dotenv from 'dotenv'
 const { JsonBox } = require("jsonbox-node")
 dotenv.config()
 
-const jsonbox = new JsonBox(process.env.VUE_APP_JSON_BOX)
+const jsonbox = new JsonBox()
 
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import router from './router'
+import store from './store'
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
 Vue.config.productionTip = false
+Vue.prototype.$jsonbox = jsonbox
 
 new Vue({
-  jsonbox,
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')

@@ -18,7 +18,10 @@ export default {
     name: "Nav",
     methods: {
         logout () {
-            this.$router.push("/logout")
+            this.$store.dispatch('logout').then(() => {
+                this.$router.push("/login")
+            })
+            
         }
     }
 }

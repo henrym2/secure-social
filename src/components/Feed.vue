@@ -15,6 +15,11 @@ export default {
     NewPost,
     Post
   },
+  computed: {
+    isLoggedIn () {
+      return this.$store.getters.isLoggedIn
+    }
+  },
   data () {
     return {
       posts: [

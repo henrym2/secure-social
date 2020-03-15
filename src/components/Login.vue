@@ -8,12 +8,18 @@
           <b-form-group label="Email:">
             <b-form-input label="Email:" placeholder="Enter Email" required v-model="input.email"></b-form-input>
           </b-form-group>
-          <b-form-group label="Password:">
+          <b-form-group label="Password:">  
             <b-form-input label="Password:" placeholder="Enter password" required type="password" v-model="input.password"></b-form-input>
           </b-form-group>
           <b-button class="d-flex align-self-center m-auto" variant="primary" @click="login()">Login</b-button>
         </b-form>
         <router-link  class="mt-2" to="/register" >Register</router-link>
+        <b-alert
+          class="login-fail"
+          :show="failed"
+          dismissible
+          @dismissed="failed = false"
+          variant="warning">Login failed</b-alert>
       </div>
   </div>
 </template>
@@ -26,25 +32,25 @@ export default {
       input: {
         email: "",
         password: "",
-      }
+      },
+      failed: false
     }
   },
   methods: {
     login () {
       const {email, password} = this.input
       if(email != "" && password != "") {
-        if(email.toLowerCase() == "admin" && password == "admin"){
-          console.log("Logged in", email, password)
-
-          this.$emit("authenticated", true)
-          
-          this.$router.push({ name: "Feed", params: { user: "UserID" } })
+          this.$store.dispatch('login', { email, password }).then(() => {
+            this.$router.push("/feed")
+          }).catch(() => {
+            this.failed = true
+          }
+          )
         } else {
-          console.log("Failed", email, password)
+          this.failed = true
         }
       }
     }
-  }
 }
 </script>
 
@@ -63,5 +69,10 @@ export default {
     width: 25.2rem;
     height: 27.3rem;
     align-self: center;
+  }
+
+  .login-fail{
+    position: absolute;
+    top: 30rem;
   }
 </style>
