@@ -25,11 +25,12 @@ export default {
       posts: [
         {id: 0, title: "Test", body: "Test"},
         {id: 1, title: "Test 2", body: "Test 2"}
-      ]
+      ],
+      user: this.$store.state.user
     }
   },
   mounted () {
-    console.log(this.$route.params)
+    // console.log(this.$route.params)
   }
 }
 </script>

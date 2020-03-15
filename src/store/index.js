@@ -59,7 +59,6 @@ export default new Vuex.Store({
           const token = result._id
           const user = result
           localStorage.setItem('token', token)
-          console.log(localStorage.getItem('token'))
           commit('auth_success', token, user)
           resolve(result)
         }).catch((err) => {

@@ -21,7 +21,6 @@ export default {
   },
   methods: {
     navLess () {
-      console.log(this.$route.path)
       return this.navLessRoutes.includes(this.$route.path)
     }
   }
