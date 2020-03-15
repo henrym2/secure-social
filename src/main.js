@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import dotenv from 'dotenv'
+const pwbox = require("pwbox")
 const { JsonBox } = require("jsonbox-node")
 dotenv.config()
 
@@ -16,6 +17,7 @@ Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
 Vue.config.productionTip = false
 Vue.prototype.$jsonbox = jsonbox
+Vue.prototype.$pwbox = pwbox
 
 new Vue({
   router,

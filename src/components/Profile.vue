@@ -4,7 +4,7 @@
       <h3>Profile</h3>
     </div>
     <div class="profile-content flex-column f-flex m-3">
-      <p>User Name: Admin</p>
+      <p>User Name: {{userName}}</p>
       <p>Password: ***********</p>
       <p>Public Key: ***********</p>
     </div>
@@ -64,6 +64,7 @@ export default {
   name: "Profile",
   data () {
     return {
+      userName: this.$store.state.user.email,
       perPage: 5,
       currentPage: 1,
       trustName: '',
@@ -76,6 +77,7 @@ export default {
   },
   computed: {
     trustRows () {
+      console.log(this.$store.state)
       return this.trusted.length
     },
     isLoggedIn() {
