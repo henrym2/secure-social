@@ -12,6 +12,7 @@
     "bootstrap-vue": "^2.6.1",
     "core-js": "^3.6.4",
     "crypto": "^1.0.1",
+    "cyberchef": "^9.18.2",
     "dotenv": "^8.2.0",
     "jsonbox-node": "^1.0.7",
     "pwbox": "^0.1.0",
