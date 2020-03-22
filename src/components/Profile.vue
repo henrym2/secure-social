@@ -60,6 +60,8 @@
 </template>
 
 <script>
+const BOX_ID = process.env.VUE_APP_BOX_ID
+
 export default {
   name: "Profile",
   data () {
@@ -69,20 +71,22 @@ export default {
       currentPage: 1,
       trustName: '',
       valid: null,
-      trusted: [
-        {id: 0, email: "John"},
-      ],
+      trusted: [],
       selected: []
     }
   },
   computed: {
     trustRows () {
-      console.log(this.$store.state)
       return this.trusted.length
     },
     isLoggedIn() {
       return this.$store.getters.isLoggedIn
     }
+  },
+  mounted() {
+    this.$jsonbox.read(BOX_ID, this.$store.state.user._id).then(res => {
+      this.trusted = res.trusted
+    }).catch(e => console.log(e))
   },
   methods: {
     onSelect (items) {
@@ -96,11 +100,14 @@ export default {
       if(!this.checkValid()) {
         return 
       }
-
-      this.trusted.push({id: 0, email: this.trustName})
-      this.$nextTick(() => {
+      this.$jsonbox.read(BOX_ID, "users", {query: `email:${this.trustName}`}).then(res => {
+        this.trusted.push({id: res[0]._id, email: this.trustName})
+        this.$jsonbox.update({ ...this.$store.state.user, trusted: this.trusted}, BOX_ID, this.$store.state.user._id)
+        this.$nextTick(() => {
         this.$bvModal.hide('add-trust-modal')
       })
+      })
+      
     },
     resetModal() {
       this.trustName = ''

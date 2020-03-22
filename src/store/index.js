@@ -18,8 +18,8 @@ export default new Vuex.Store({
     auth_success(state, payload){
       state.status = 'success'
       state.token = payload.token
-      const newUser = { email: payload.userData.email, publicKey: payload.userData.publicKey }
-      state.user = newUser
+      console.log(payload)
+      state.user = payload.user
     },
     auth_error(state){
       state.status = 'error'
@@ -41,7 +41,7 @@ export default new Vuex.Store({
           }
           const token = userData._id
           localStorage.setItem('token', token)
-          commit('auth_success', {token, userData})
+          commit('auth_success', {token, user: userData})
           resolve(userData)
         }).catch((err) => {
           commit('auth_error')
@@ -58,7 +58,7 @@ export default new Vuex.Store({
         .then((result) => {
           const token = result._id
           localStorage.setItem('token', token)
-          commit('auth_success', token, user)
+          commit('auth_success', {token, user})
           resolve(result)
         }).catch((err) => {
           console.error(err)
