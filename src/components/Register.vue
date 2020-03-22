@@ -41,10 +41,10 @@ export default {
           this.$router.push('/feed')
         }).catch(err => console.error(err))
         
-        await this.$jsonbox.create({email, password, publicKey, privateKey}, BOX_ID, "users")
+        await this.$jsonbox.create({email, password, privateKey, trusted: []}, BOX_ID, "users")
     },
     generateKey() {
-      return {privateKey: crypto.randomBytes(32).toString(), publicKey: "b"}  
+      return {privateKey: crypto.randomBytes(32).toString()}  
     } 
   },
   
