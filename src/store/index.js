@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-const { JsonBox } = require("jsonbox-node")
-const jsonbox = new JsonBox()
+import axios from "axios"
 
 Vue.use(Vuex)
 
@@ -33,9 +32,11 @@ export default new Vuex.Store({
     login({commit}, user){
       return new Promise((resolve, reject) => {
         commit('auth_request')
-        jsonbox.read(process.env.VUE_APP_BOX_ID, "users", {query: `email:${user.email},password:${user.password}`, limit: 1})
+        // jsonbox.read(process.env.VUE_APP_BOX_ID, "users", {query: `email:${user.email},password:${user.password}`, limit: 1})
+        axios.post("http://localhost:3000/login", {"email": user.email, "password": user.password})
         .then((result) => {
-          const userData = result[0]
+          
+          const userData = result.data[0]
           if (result.length <= 0) {
             reject()
           }
@@ -54,14 +55,17 @@ export default new Vuex.Store({
     register({commit}, user) {
       return new Promise((resolve, reject) => {
         commit('auth_request')
-        jsonbox.create(user, process.env.VUE_APP_BOX_ID, "users")
+        console.log(user)
+        // jsonbox.create(user, process.env.VUE_APP_BOX_ID, "users")
+        axios.post("http://localhost:3000/register", {email: user.email, password: user.password})
         .then((result) => {
-          const token = result._id
+          console.log(result)
+          const token = result.data[0]._id
           localStorage.setItem('token', token)
           commit('auth_success', {token, user})
-          resolve(result)
+          resolve(result[0])
         }).catch((err) => {
-          console.error(err)
+          console.log(err)
           commit('auth_error', err)
           localStorage.removeItem('token')
           reject(err)

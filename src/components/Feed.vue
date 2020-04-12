@@ -1,7 +1,7 @@
 <template>
   <div>
       <NewPost @formSubmit="post"></NewPost>
-      <Post v-for="post in posts" :key="post._id" :title="post.title" :body="post.body"></Post>
+      <Post v-for="post in posts" :key="post._id" :title="post.title" :body="post.body" :newPost="getPosts"></Post>
   </div>
 </template>
 

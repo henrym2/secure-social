@@ -61,7 +61,8 @@
 
 <script>
 const BOX_ID = process.env.VUE_APP_BOX_ID
-
+import nacl from 'tweetnacl'
+nacl.util = require("tweetnacl-util")
 export default {
   name: "Profile",
   data () {
@@ -101,7 +102,7 @@ export default {
         return 
       }
       this.$jsonbox.read(BOX_ID, "users", {query: `email:${this.trustName}`}).then(res => {
-        this.trusted.push({id: res[0]._id, email: this.trustName})
+        this.trusted.push({id: res[0]._id, name: this.trustName, })
         this.$jsonbox.update({ ...this.$store.state.user, trusted: this.trusted}, BOX_ID, this.$store.state.user._id)
         this.$nextTick(() => {
         this.$bvModal.hide('add-trust-modal')

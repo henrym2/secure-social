@@ -34,6 +34,12 @@ const BOX_ID = process.env.VUE_APP_BOX_ID
 
 export default {
     name: "NewPost",
+    props: {
+        newPost: {
+            type: Function,
+            default: undefined
+        },
+    },
     data () {
         return {
             postData: {
@@ -41,7 +47,7 @@ export default {
                 title: "",
                 body: "",
                 author: this.$store.state.user.email
-            }
+            },
         }
     },
     methods: {
@@ -66,6 +72,7 @@ export default {
                 console.log(res)
                 this.$jsonbox.create({ ...this.postData, author: res[0].email, trusted: res[0].trusted.map(t => t.email) }, BOX_ID, "posts").then((res) => {
                 console.log(res)
+                this.props.newPost()
                 }).catch(err => {
                     console.log(err)
                 })
