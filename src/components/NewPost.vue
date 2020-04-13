@@ -29,11 +29,14 @@
 </template>
 
 <script>
-const chef = require("cyberchef");
+// const chef = require("cyberchef");
 const BOX_ID = process.env.VUE_APP_BOX_ID
 
 export default {
     name: "NewPost",
+    props: {
+            callBack: Function,
+        },
     data () {
         return {
             postData: {
@@ -46,30 +49,22 @@ export default {
     },
     methods: {
         post () {
-            console.log("POSTING")
-            console.log(this.$store.state)
-            if(this.postData.encrypt){
-                this.postData.body = chef.bake(this.postData.body, [
-                    {
-                        "op": "AES Encrypt",
-                        "args": [
-                            { "option": "UTF8", "string": this.$store.state.user.privateKey }, 
-                            { "option": "UTF8", "string": process.env.VUE_APP_SECRET.toString() }, 
-                        "CBC",
-                        "Raw", 
-                        "Hex"   
-                        ] 
+            if (this.title != "" && this.body != ""){
+                this.$jsonbox.read(BOX_ID, "users", {query: `email:${this.$store.state.user.email}`, limit: 1 }).then(res => {
+                    if (this.postData.encrypt) {
+                        this.postData.body = this.$crypt.encrypt([...(res[0].trusted.map(t => t.publicKey)), res[0].publicKey], this.postData.body)
                     }
-                ]).value
-            }
-            this.$jsonbox.read(BOX_ID, "users", {query: `email:${this.$store.state.user.email}`, limit: 1 }).then(res => {
-                console.log(res)
-                this.$jsonbox.create({ ...this.postData, author: res[0].email, trusted: res[0].trusted.map(t => t.email) }, BOX_ID, "posts").then((res) => {
-                console.log(res)
-                }).catch(err => {
-                    console.log(err)
-                })
-            }).catch(err => console.log(err))            
+                    this.$jsonbox.create({ ...this.postData, author: res[0].email, trusted: res[0].trusted.map(t => t.email) }, BOX_ID, "posts").then((res) => {
+                        this.$store.state.user.posts.push(res._id)
+                        this.$jsonbox.update({ ...this.$store.state.user, posts: this.$store.state.user.posts}, BOX_ID, this.$store.state.user._id).then(() => {
+                            this.callBack()
+                        }).catch(e => console.log(e))
+                        
+                    }).catch(err => {
+                        console.log(err)
+                    })
+                }).catch(err => console.log(err))  
+            }          
         }
     }
 }

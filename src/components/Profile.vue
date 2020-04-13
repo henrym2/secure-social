@@ -22,6 +22,7 @@
         :per-page="perPage"
         :current-page="currentPage"
         bordered
+        :fields="fields"
       >
       </b-table>
       <div class="d-flex flex-row">
@@ -31,8 +32,10 @@
           :per-page="perPage"
           aria-controls="trust-table">
         </b-pagination>
-        <b-button variant="primary" class="ml-auto add-button" v-b-modal.add-trust-modal>Add</b-button>
-        <b-modal 
+        <b-button varient="danger" class="ml-auto mr-1 add-button" @click="remove">Remove</b-button>
+          <b-button variant="primary" class="ml-2 add-button" v-b-modal.add-trust-modal>Add</b-button>
+      </div>
+      <b-modal 
           id="add-trust-modal"
           title="Add trusted user"
           @show="resetModal"
@@ -54,7 +57,6 @@
             </b-form-group>
           </form>
         </b-modal>
-      </div>
     </div>
   </div>
 </template>
@@ -72,7 +74,10 @@ export default {
       trustName: '',
       valid: null,
       trusted: [],
-      selected: []
+      selected: [],
+      fields: [
+        'id', 'email'
+      ]
     }
   },
   computed: {
@@ -84,9 +89,7 @@ export default {
     }
   },
   mounted() {
-    this.$jsonbox.read(BOX_ID, this.$store.state.user._id).then(res => {
-      this.trusted = res.trusted
-    }).catch(e => console.log(e))
+    this.trusted = this.$store.state.user.trusted
   },
   methods: {
     onSelect (items) {
@@ -101,13 +104,34 @@ export default {
         return 
       }
       this.$jsonbox.read(BOX_ID, "users", {query: `email:${this.trustName}`}).then(res => {
-        this.trusted.push({id: res[0]._id, email: this.trustName})
+        this.trusted.push({ id: res[0]._id, email: this.trustName, publicKey: res[0].publicKey })
         this.$jsonbox.update({ ...this.$store.state.user, trusted: this.trusted}, BOX_ID, this.$store.state.user._id)
         this.$nextTick(() => {
         this.$bvModal.hide('add-trust-modal')
       })
+      }).catch(e => {
+        console.log(e)
       })
       
+    },
+    async remove() {
+      await this.$jsonbox.update({ ...this.$store.state.user, trusted: this.trusted}, BOX_ID, this.$store.state.user._id)
+      this.$jsonbox.read(BOX_ID, "posts",{query: `author:${this.userName}`}).then(res => {
+        let promises = [];
+        console.log(res)
+        if (res != undefined && res.length > 0) {
+        res.forEach(async post => {
+          promises.push(
+            this.$jsonbox.update(
+              {...post, trusted: post.trusted.filter(x => !this.selected.includes(x))}, BOX_ID, this.$store.state.user._id)
+          )
+          await Promise.all(promises)
+        })
+        }
+      }).catch((e) => console.log(e))
+      if (this.selected.length != 0) {
+        this.trusted = this.trusted.filter(x => !this.selected.includes(x))
+      }
     },
     resetModal() {
       this.trustName = ''

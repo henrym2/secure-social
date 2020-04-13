@@ -19,8 +19,8 @@
 </template>
 
 <script>
-const BOX_ID = process.env.VUE_APP_BOX_ID
-import crypto from "crypto"
+// const BOX_ID = process.env.VUE_APP_BOX_ID
+// import crypto from "crypto"
 
 export default {
   name: "Login",
@@ -35,17 +35,14 @@ export default {
   methods: {
     async register () {
         const {email, password} = this.input
-        const { privateKey, publicKey } = this.generateKey()
-        let data = {email, password, privateKey, publicKey}
+        this.$rsa.generateKeyPairAsync().then(keyPair => {
+        const { publicKey, privateKey } = keyPair
+        let data = {email, password, publicKey, privateKey, trusted: [], posts:[]}
         this.$store.dispatch('register',data).then(() => {
           this.$router.push('/feed')
+          })
         }).catch(err => console.error(err))
-        
-        await this.$jsonbox.create({email, password, privateKey, trusted: []}, BOX_ID, "users")
     },
-    generateKey() {
-      return {privateKey: crypto.randomBytes(32).toString()}  
-    } 
   },
   
 

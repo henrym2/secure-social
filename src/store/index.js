@@ -18,7 +18,6 @@ export default new Vuex.Store({
     auth_success(state, payload){
       state.status = 'success'
       state.token = payload.token
-      console.log(payload)
       state.user = payload.user
     },
     auth_error(state){
@@ -45,7 +44,6 @@ export default new Vuex.Store({
           resolve(userData)
         }).catch((err) => {
           commit('auth_error')
-          console.log(err)
           localStorage.removeItem('token')
           reject(err)
         });
